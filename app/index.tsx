@@ -1,16 +1,28 @@
-import { Text, View, Pressable } from "react-native";
-import { StyleSheet } from "react-native-unistyles";
+import { Text, View, Pressable, Button } from "react-native";
+import { StyleSheet, UnistylesRuntime } from "react-native-unistyles";
 
 export default function Index() {
   return (
     <View style={styles.container}>
-      <Text> app/index.tsx to edit this screen.</Text>
+      <Text style={styles.text}> {UnistylesRuntime.themeName}</Text>
       <Pressable
         style={styles.buttonContainer}
-        onPress={() => alert("Button Pressed")}
+        onPress={() => {
+          console.log("Button Pressed");
+        }}
       >
-        <Text style={styles.buttonText}>Click Me</Text>
+        <View style={styles.button}>
+          <Text style={styles.buttonText}>Click Me</Text>
+        </View>
       </Pressable>
+      <Button
+        title="Change Theme"
+        onPress={() => {
+          UnistylesRuntime.setTheme(
+            UnistylesRuntime.themeName === "light" ? "dark" : "light",
+          );
+        }}
+      />
     </View>
   );
 }
@@ -27,9 +39,25 @@ const styles = StyleSheet.create((theme) => ({
     padding: 10,
     borderRadius: 5,
     backgroundColor: theme.colors.secondary,
-    boxShadow: "0px 4px 4px rgba(0, 0, 0, 0.25) inset",
+    boxShadow: [
+      {
+        offsetX: 5,
+        offsetY: 5,
+        blurRadius: 5,
+        spreadDistance: 0,
+        color: "red",
+      },
+    ],
+  },
+  button: {
+    padding: 10,
+    borderRadius: 5,
+    backgroundColor: theme.colors.secondary,
   },
   buttonText: {
     color: theme.colors.primary,
+  },
+  text: {
+    color: theme.colors.secondary,
   },
 }));
